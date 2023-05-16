@@ -1,39 +1,69 @@
 import { StyleSheet } from "react-native";
 
-import { COLORS, FONT, SIZES } from "../../../constants";
+import { COLORS, SIZES } from "../../../constants";
+import { color } from "react-native-reanimated";
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: SIZES.xLarge,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flex: 1,
+    backgroundColor: COLORS.lightWhite,
     alignItems: "center",
-    marginTop: SIZES.small,
+    justifyContent: "center",
   },
-  headerBold: {
+  row: {
+    alignSelf: "center",
     flexDirection: "row",
-    justifyContent: "space-between",
+    height: 70,
+  },
+  textHeader: {
+    position: 'absolute',
+    fontSize: 25,
     fontWeight: 'bold',
+    textAlign: 'center',
+    top: 150
+  },
+  textTarget: {
+    position: 'absolute',
+    fontSize: 35,
     fontWeight: 'bold',
-    fontSize: 15,
+    textAlign: 'center',
+    top: 190,
+    color: 'orange'
+
+  },
+  input: {
+    height: 40,
+    width: 180,
+    marginTop: 12,
+    marginLeft: 5,
+    borderWidth: 2,
+    borderColor: 'orange',
+    padding: 10,
+    borderRadius: SIZES.small,
+    textAlign: 'center',
+    color: 'orange',
+    fontSize: 35,
+  },
+  text: {
+    color: "white",
+    fontSize: 47,
+    textAlign: 'center'
+  },
+  buttonLayer: { 
+    position: 'absolute', 
+    bottom: 120
+  },
+  button: {
+    width: 100,
+    height: 40,
+    backgroundColor: "orange",
+    justifyContent: "center",
     alignItems: "center",
+    borderRadius: 10,
+    elevation: 10,
   },
-  headerTitle: {
-    fontSize: SIZES.large,
-    fontFamily: FONT.medium,
-    color: COLORS.primary,
-  },
-  headerBtn: {
-    fontSize: SIZES.medium,
-    fontFamily: FONT.medium,
-    color: COLORS.gray,
-  },
-  cardsContainer: {
-    marginTop: SIZES.medium,
-    gap: SIZES.small,
-  },
+  buttonText: { fontSize: 15, color: "white" },
+  title: { fontSize: 40, flex: 0.5, color: "gray" },
 });
 
 export default styles;

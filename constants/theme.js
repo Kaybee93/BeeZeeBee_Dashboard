@@ -9,7 +9,7 @@ const COLORS = {
   white: "#F3F4F8",
   lightWhite: "#FAFAFC",
 
-  orange: "#f2d30a",
+  orange: 'orange',
   black: "#000000",
   red: '#ff0303',
   green: "#32A836"

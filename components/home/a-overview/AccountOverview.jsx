@@ -5,7 +5,6 @@ import styles from './accountoverview.style'
 import { firebase } from '../../../config'
 import { COLORS, SIZES } from '../../../constants'
 import useFetch from '../../../hook/useFetch';
-import { color, set } from 'react-native-reanimated'
 
 import RNSpeedometer from 'react-native-speedometer'
 
