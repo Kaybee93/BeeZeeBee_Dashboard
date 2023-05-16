@@ -5,6 +5,17 @@
       "bundler": "metro"
     },
     "name": "BeeZeeBee_Dashboard",
-    "slug": "BeeZeeBee_Dashboard"
+    "slug": "BeeZeeBee_Dashboard",
+    "extra": {
+      "eas": {
+        "projectId": "143424c9-11ae-40f3-9439-eff2f6be4327"
+      }
+    },
+    "android": {
+      "package": "com.kaybee93.BeeZeeBee"
+    },
+    "ios": {
+      "bundleIdentifier": "com.kaybee93.BeeZeeBee"
+    }
   }
 }

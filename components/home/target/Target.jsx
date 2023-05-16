@@ -45,7 +45,7 @@ const Target = () => {
                 </Animated.View>
             </LiquidProgress>
             <Text style={styles.textHeader}>Target</Text>
-            <Text style={styles.textTarget}>{currency}{target}</Text> 
+            <Text style={styles.textTarget}>{currency}{target}</Text>
             <View style={styles.buttonLayer}>
                 <TouchableOpacity
                     style={styles.button}
