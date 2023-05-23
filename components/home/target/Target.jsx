@@ -7,31 +7,46 @@ import LiquidProgress from "react-native-liquid-progress"
 import styles from './target.style'
 
 const Target = () => {
-    const [balance, setBalance] = useState(0);
     const [target, setTarget] = useState(0);
     const [value, setValue] = useState(0);
     const [currency, setCurrency] = useState(null);
     const [accountType, setAccount] = useState('PRACTICE')
+    const [data, setData] = useState([]);
+    
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const documentSnapshot = await firebase.firestore()
+                    .collection('Settings')
+                    .doc('settings')
+                    .get();
+    
+                    if (documentSnapshot.exists) {
+                        const accTpye = documentSnapshot.data().app_acc;
+                        setAccount(accTpye);
+                    }
+                } catch (error) {
+                    console.error('Error fetching data: ', error);
+                } 
+            };
+            fetchData();
+        }, []);
 
-    useEffect(() => {
-        firebase.firestore().collection('Settings').doc('settings').onSnapshot((querySnapshot) => {
-            const accTpye =  querySnapshot.data().app_acc;
-            setAccount(accTpye)
-       });
-       firebase.firestore().collection('Accounts').doc(accountType).onSnapshot((querySnapshot) => {
+      useEffect(() => {
+        const myTarget = firebase.firestore().collection('Accounts').doc(accountType).onSnapshot((querySnapshot) => {
             const Balance = querySnapshot.data().Balance;
-            const target = querySnapshot.data().target;
+            const Target = querySnapshot.data().target;
             const currency = querySnapshot.data().currency;
-            setCurrency(currency)
-            setBalance(Balance)
-            setTarget(target)
-            setValue(balance / target) 
-        });
-      },[]);
-
+            const newValue = Balance / Target;
+            setCurrency(currency);
+            setTarget(Target.toString());
+            setValue(newValue); 
+        }); 
+        return () => myTarget();
+      }, []);
+      
       const handleButtonClick = async () => {
         const docRef = firebase.firestore().collection('Accounts').doc(accountType);
-    
         docRef.update({
             target: parseInt(target)
           }).then(() => { 
@@ -43,6 +58,8 @@ const Target = () => {
 
     return (
         <View style={ styles.container }>
+            <Text style={styles.textHeader}>Target</Text>
+            
             <LiquidProgress
                 backgroundColor={"black"}
                 frontWaveColor={"orange"}
@@ -55,17 +72,16 @@ const Target = () => {
                     <Text style={styles.text}>{(value * 100).toFixed(2)}%</Text>
                 </Animated.View>
             </LiquidProgress>
-            <Text style={styles.textHeader}>Target</Text>
             <View style={styles.Tragetcontainer}>
-            <Text style={styles.textTarget}>{currency}</Text>
-            <TextInput 
-                defaultValue={target.toString()}
-                style={styles.input}
-                onChangeText={setTarget}
-                value={target}
-                placeholder="0"
-                keyboardType="numeric"
-            /> 
+                <Text style={styles.textTarget}>{currency}</Text>
+                <TextInput 
+                    defaultValue={target.toString()}
+                    style={styles.input}
+                    onChangeText={setTarget}
+                    value={target.toString()}
+                    placeholder="0"
+                    keyboardType="numeric"
+                /> 
             </View>
             <View style={styles.buttonLayer}>
                 <TouchableOpacity
