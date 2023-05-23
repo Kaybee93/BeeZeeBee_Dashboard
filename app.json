@@ -12,7 +12,8 @@
       }
     },
     "android": {
-      "package": "com.kaybee93.BeeZeeBee"
+      "package": "com.kaybee93.BeeZeeBee",
+      "softwareKeyboardLayoutMode": "pan"
     },
     "ios": {
       "bundleIdentifier": "com.kaybee93.BeeZeeBee"

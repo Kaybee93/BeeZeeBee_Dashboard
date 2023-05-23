@@ -25,13 +25,24 @@ const Target = () => {
             setCurrency(currency)
             setBalance(Balance)
             setTarget(target)
-            setValue(balance / target)
+            setValue(balance / target) 
         });
       },[]);
 
+      const handleButtonClick = async () => {
+        const docRef = firebase.firestore().collection('Accounts').doc(accountType);
+    
+        docRef.update({
+            target: parseInt(target)
+          }).then(() => { 
+            console.log('Document written!');
+          }).catch(error => {
+            console.error('Error writing document: ', error);
+          });
+      };
+
     return (
         <View style={ styles.container }>
-            
             <LiquidProgress
                 backgroundColor={"black"}
                 frontWaveColor={"orange"}
@@ -45,10 +56,21 @@ const Target = () => {
                 </Animated.View>
             </LiquidProgress>
             <Text style={styles.textHeader}>Target</Text>
-            <Text style={styles.textTarget}>{currency}{target}</Text>
+            <View style={styles.Tragetcontainer}>
+            <Text style={styles.textTarget}>{currency}</Text>
+            <TextInput 
+                defaultValue={target.toString()}
+                style={styles.input}
+                onChangeText={setTarget}
+                value={target}
+                placeholder="0"
+                keyboardType="numeric"
+            /> 
+            </View>
             <View style={styles.buttonLayer}>
                 <TouchableOpacity
                     style={styles.button}
+                    onPress={handleButtonClick}
                 >
                     <Text style={styles.buttonText}>Set Target</Text>
                 </TouchableOpacity>

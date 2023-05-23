@@ -22,24 +22,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     top: 150
   },
-  textTarget: {
+  Tragetcontainer: {
+    top: 190,
+    flexDirection: 'row',
     position: 'absolute',
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  textTarget: {
     fontSize: 35,
     fontWeight: 'bold',
     textAlign: 'center',
-    top: 190,
     color: 'orange'
 
   },
   input: {
-    height: 40,
-    width: 180,
-    marginTop: 12,
-    marginLeft: 5,
-    borderWidth: 2,
-    borderColor: 'orange',
-    padding: 10,
-    borderRadius: SIZES.small,
+    fontWeight: 'bold',
     textAlign: 'center',
     color: 'orange',
     fontSize: 35,
