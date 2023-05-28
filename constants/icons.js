@@ -14,6 +14,8 @@ import start from '../assets/icons/start-button.png'
 import eurusd from '../assets/icons/EURUSD.png'
 import upArrow from '../assets/icons/green-arrow.png'
 import downArrow from '../assets/icons/red-arrow.png'
+import onButton from '../assets/icons/power-button-on.png'
+import offButton from '../assets/icons/power-button-off.png'
 
 export default {
   heart,
@@ -31,5 +33,7 @@ export default {
   eurusd,
   chevronRight,
   upArrow,
-  downArrow
+  downArrow,
+  onButton,
+  offButton
 };

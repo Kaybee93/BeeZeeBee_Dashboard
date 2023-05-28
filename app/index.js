@@ -41,7 +41,7 @@ const Home = () => {
                     headerShadowVisible: false,
                     headerLeft: () => (
                         <ScreenHeaderBtn 
-                            iconUrl={isPress === true? icons.stop : icons.start} 
+                            iconUrl={isPress === true? icons.onButton : icons.offButton} 
                             dimension="80%" 
                             handlePress={handleButtonClick}
                         />
