@@ -23,6 +23,7 @@ const DailyReport = () => {
     const [dailydate, setDailyDate] = useState([]) 
     const [dailyReportAsc, setDailyReportAsc] = useState([]) 
     const [accountType, setAccount] = useState('PRACTICE')
+    const [interval, setInterval] = useState(5)
 
     useEffect(() => {
         firebase.firestore().collection('Settings').doc('settings').onSnapshot((querySnapshot) => {
@@ -34,13 +35,13 @@ const DailyReport = () => {
       
       useEffect(() => {
         const fetchData = async () => {
-            const snapshot = await firebase.firestore().collection('/Data/daily_report/' + accountType).orderBy('timestamp', 'desc').limit(5).get();
+            const snapshot = await firebase.firestore().collection('/Data/daily_report/' + accountType).orderBy('timestamp', 'desc').limit(interval).get();
             const docs = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
             console.log()
           setDailyReport(docs)
        };
         const fetchDataAsc = async () => {
-            const snapshot = await firebase.firestore().collection('/Data/daily_report/' + accountType).orderBy('timestamp', 'desc').limit(5).get();
+            const snapshot = await firebase.firestore().collection('/Data/daily_report/' + accountType).orderBy('timestamp', 'desc').limit(interval).get();
             const docs = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
             console.log()
             setDailyReportAsc(docs)
