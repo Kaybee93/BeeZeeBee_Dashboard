@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator} from 'react-native'
 
 import styles from './accountoverview.style'
 import { firebase } from '../../../config'
@@ -16,7 +16,7 @@ const AccountOverview = () => {
   const [rsi, setRSI] = useState(null)
   const [accounts, setAccs] = useState([]) 
   const [activeAccType, setActiveAccType] = useState('DEMO')
-  const [accountType, setAccount] = useState('PRACTICE')
+  const [accountType, setAccount] = useState(null)
 
   useEffect(() => {
     firebase.firestore().collection('Settings').doc('settings').onSnapshot((querySnapshot) => {
@@ -36,8 +36,6 @@ const AccountOverview = () => {
       setRSI(rsi)
    });
   }, []);
-
-  refresh()
 
   function refresh(){
     firebase.firestore().collection('Accounts').doc(accountType).onSnapshot((querySnapshot) => {
@@ -67,6 +65,16 @@ const AccountOverview = () => {
         console.error('Error writing document: ', error);
       });
   };
+
+  if (accountType === null) {
+    return (
+        <View style={{ flex: 1, backgroundColor: COLORS.lightWhite}}>
+            <ActivityIndicator size="large" colors={COLORS.orange}/>
+        </View>
+    );
+  }
+
+  refresh()
 
   return (
     <View style={styles.container}>

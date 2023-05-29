@@ -1,39 +1,39 @@
 import { useState, useEffect } from 'react'
-import { View, Text, Animated, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, Animated, TouchableOpacity, TextInput, ActivityIndicator} from "react-native";
 
 import { firebase } from '../../../config'
 
 import LiquidProgress from "react-native-liquid-progress"
 import styles from './target.style'
+import { COLORS } from '../../../constants';
 
 const Target = () => {
     const [target, setTarget] = useState(0);
     const [value, setValue] = useState(0);
     const [currency, setCurrency] = useState(null);
-    const [accountType, setAccount] = useState('PRACTICE')
-    const [data, setData] = useState([]);
-    
-        useEffect(() => {
-            const fetchData = async () => {
-                try {
-                    const documentSnapshot = await firebase.firestore()
-                    .collection('Settings')
-                    .doc('settings')
-                    .get();
-    
-                    if (documentSnapshot.exists) {
-                        const accTpye = documentSnapshot.data().app_acc;
-                        setAccount(accTpye);
-                    }
-                } catch (error) {
-                    console.error('Error fetching data: ', error);
-                } 
-            };
-            fetchData();
-        }, []);
+    const [accountType, setAccount] = useState(null)
+     
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const documentSnapshot = await firebase.firestore()
+                .collection('Settings')
+                .doc('settings')
+                .get();
 
-      useEffect(() => {
-        const myTarget = firebase.firestore().collection('Accounts').doc(accountType).onSnapshot((querySnapshot) => {
+                if (documentSnapshot.exists) {
+                    const accTpye = documentSnapshot.data().app_acc;
+                    setAccount(accTpye);
+                }
+            } catch (error) {
+                console.error('Error fetching data: ', error);
+            } 
+        };
+        fetchData();
+    }, []);
+
+    function refresh(){
+        firebase.firestore().collection('Accounts').doc(accountType).onSnapshot((querySnapshot) => {
             const Balance = querySnapshot.data().Balance;
             const Target = querySnapshot.data().target;
             const currency = querySnapshot.data().currency;
@@ -42,19 +42,29 @@ const Target = () => {
             setTarget(Target.toString());
             setValue(newValue); 
         }); 
-        return () => myTarget();
-      }, []);
-      
-      const handleButtonClick = async () => {
-        const docRef = firebase.firestore().collection('Accounts').doc(accountType);
-        docRef.update({
-            target: parseInt(target)
-          }).then(() => { 
-            console.log('Document written!');
-          }).catch(error => {
-            console.error('Error writing document: ', error);
-          });
-      };
+    }
+    
+    const handleButtonClick = async () => {
+    const docRef = firebase.firestore().collection('Accounts').doc(accountType);
+    docRef.update({
+        target: parseInt(target)
+        }).then(() => { 
+        console.log('Document written!');
+        }).catch(error => {
+        console.error('Error writing document: ', error);
+        });
+    };
+
+    if (accountType === null) {
+        return (
+            <View style={{ flex: 1, backgroundColor: COLORS.lightWhite}}>
+                <ActivityIndicator size="large" colors={COLORS.orange}/>
+                <Text style={{ fontWeight: "bold", textAlign: "center"}}>Loading Data</Text>
+            </View>
+        );
+    }
+
+    refresh()
 
     return (
         <View style={ styles.container }>

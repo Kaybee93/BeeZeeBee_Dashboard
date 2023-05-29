@@ -12,7 +12,7 @@ import { firebase } from '../../../config'
 const TradeOverview = () => {
   const router = useRouter();
   const [trades, setTrades] = useState([]);
-  const [accountType, setAccount] = useState('PRACTICE')
+  const [accountType, setAccount] = useState(null)
   
   const { isLoading} = useFetch('search', {
     query: 'DevOps',
@@ -37,6 +37,14 @@ const TradeOverview = () => {
       })
       setTrades(trades)
    });
+  }
+
+  if (accountType === null) {
+    return (
+        <View style={{ flex: 1, backgroundColor: COLORS.lightWhite}}>
+          <Text style={{ fontWeight: "bold", textAlign: "center"}}>Loading Data</Text>
+        </View>
+    );
   }
 
   refresh()
