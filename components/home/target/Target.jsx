@@ -14,22 +14,10 @@ const Target = () => {
     const [accountType, setAccount] = useState(null)
      
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const documentSnapshot = await firebase.firestore()
-                .collection('Settings')
-                .doc('settings')
-                .get();
-
-                if (documentSnapshot.exists) {
-                    const accTpye = documentSnapshot.data().app_acc;
-                    setAccount(accTpye);
-                }
-            } catch (error) {
-                console.error('Error fetching data: ', error);
-            } 
-        };
-        fetchData();
+        firebase.firestore().collection('Settings').doc('settings').onSnapshot((querySnapshot) => {
+            const accTpye =  querySnapshot.data().app_acc;
+            setAccount(accTpye)   
+        });
     }, []);
 
     function refresh(){
