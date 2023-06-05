@@ -14,7 +14,7 @@ const DailyReport = () => {
     const { isLoading, } = useFetch()
     const [refreshing, setRefreshing] = useState(false);
     const [report, setReports] = useState([]);
-    const [accountType, setAccount] = useState('PRACTICE')
+    const [accountType, setAccount] = useState('REAL')
 
     const onRefresh = () => {}
     console.log(params.id)
@@ -23,7 +23,6 @@ const DailyReport = () => {
         firebase.firestore().collection('Settings').doc('settings').onSnapshot((querySnapshot) => {
             const accTpye =  querySnapshot.data().app_acc;
             setAccount(accTpye)
-            
        });
       },[]);
 
