@@ -19,7 +19,7 @@ const NearbyJobCard = ({ item, handleNavigate }) => {
       <View style={styles.textContainer}>
         <View style={styles.investContainer}>
           <Text style={styles.assetName}>{item.asset}</Text>
-          <Text style={styles.tradeInvest}>$ {item.investment}</Text>
+          <Text style={styles.tradeInvest}>{item.currency} {item.investment}</Text>
         </View>
 
         <View style={styles.investContainer}>
@@ -31,7 +31,7 @@ const NearbyJobCard = ({ item, handleNavigate }) => {
               style={styles.arrowImage}
             />
           </View>
-          <Text style={styles.tradeProfit(item.result)}>$ {item.profit}</Text>
+          <Text style={styles.tradeProfit(item.result)}>{item.currency} {item.profit}</Text>
         </View>
       </View>
     </TouchableOpacity>

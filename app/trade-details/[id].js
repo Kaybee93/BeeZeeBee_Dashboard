@@ -14,7 +14,7 @@ const TradeDetails = () => {
     const { isLoading, } = useFetch()
     const [refreshing, setRefreshing] = useState(false);
     const [trades, setTrades] = useState([]);
-    const [accountType, setAccount] = useState('PRACTICE')
+    const [accountType, setAccount] = useState('REAL')
 
     const onRefresh = () => {}
 
