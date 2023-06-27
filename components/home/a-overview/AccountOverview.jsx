@@ -14,6 +14,10 @@ const AccountOverview = () => {
 
   const { isLoading, } = useFetch()
   const [rsi, setRSI] = useState(null)
+  const [upper, setUpper] = useState(null)
+  const [lower, setLower] = useState(null)
+  const [prev_upper, setPrevUpper] = useState(null)
+  const [prev_lower, setPrevLower] = useState(null)
   const [accounts, setAccs] = useState([]) 
   const [activeAccType, setActiveAccType] = useState('DEMO')
   const [accountType, setAccount] = useState(null)
@@ -33,7 +37,15 @@ const AccountOverview = () => {
   useEffect(() => {
     firebase.firestore().collection('Data').doc('technical_analysis').onSnapshot((querySnapshot) => {
       const rsi =  querySnapshot.data().rsi;
+      const upper =  querySnapshot.data().diff_upper;
+      const lower =  querySnapshot.data().diff_lower;
+      const prev_upper =  querySnapshot.data().prev_upper;
+      const prev_lower =  querySnapshot.data().prev_lower;
       setRSI(rsi)
+      setUpper(upper)
+      setLower(lower)
+      setPrevUpper(prev_upper)
+      setPrevLower(prev_lower)
    });
   }, []);
 
@@ -110,45 +122,62 @@ const AccountOverview = () => {
                   <Text style={styles.headerAccount(item.account)}> {item.currency} {item.Balance} </Text>
                 </View>
                 <View style={styles.header}>
-                  <Text style={styles.headerTitle}>Now Trading - </Text>
-                  <Text style={styles.headerTitle}> {item.asset} </Text>
+                  <Text style={styles.headerTitle}>Now Trading: </Text>
+                  <Text style={styles.headerTitle}>{item.asset}</Text>
                 </View>
+                
                 <Text style={{ textAlign: 'center', marginTop: 10, color: COLORS.white }}>RELATIVE STRENGTH INDEX</Text>
-                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                  <RNSpeedometer
-                    value={rsi === null? 0 : rsi}
-                    minValue={0}
-                    maxValue={100}
-                    size={100}
-                    allowedDecimals={2}
-                    labelStyle={{color: 
-                      rsi < 10? '#ff2900': 
-                      rsi >= 10 && rsi < 30? '#ff5400':
-                      rsi >= 30 && rsi < 50? '#f4ab44':
-                      rsi >= 50 && rsi < 70? '#f2cf1f': 
-                      rsi >= 70 && rsi < 90? '#14eb6e': '#00ff6b'}}
-                    labels={[{
-                      labelColor: '#ff2900',
-                      activeBarColor: '#ff2900'
-                    }, {
-                      labelColor: '#ff5400',
-                      activeBarColor: '#ff5400'
-                    }, {
-                      labelColor: '#f4ab44',
-                      activeBarColor: '#f4ab44'
-                    }, {
-                      labelColor: '#f2cf1f',
-                      activeBarColor: '#f2cf1f'
-                    }, {
-                      labelColor: '#14eb6e',
-                      activeBarColor: '#14eb6e'
-                    }, {
-                      labelColor: '#00ff6b',
-                      activeBarColor: '#00ff6b'
-                    }]}
-                    
-                    segmentColors={['#ff0000', '#ffa500', '#00ff00']}
-                  />
+                
+                <View style={styles.header}>
+                  <View>
+                    <Text style={{ textAlign: 'center', marginTop: 10, color: COLORS.white }}>Lower Band</Text>
+                    <Text style={{ textAlign: 'center', color: lower > 0? COLORS.red : COLORS.white }}>{lower}</Text>
+                    <Text style={{ textAlign: 'center', marginTop: 5, color: COLORS.white }}>Previous</Text>
+                    <Text style={{ textAlign: 'center', color: prev_lower > 0? COLORS.red : COLORS.white }}>{prev_lower}</Text>
+                  </View>
+                  
+                  <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    <RNSpeedometer
+                      value={rsi === null? 0 : rsi}
+                      minValue={0}
+                      maxValue={100}
+                      size={100}
+                      allowedDecimals={2}
+                      labelStyle={{color: 
+                        rsi < 10? '#ff2900': 
+                        rsi >= 10 && rsi < 30? '#ff5400':
+                        rsi >= 30 && rsi < 50? '#f4ab44':
+                        rsi >= 50 && rsi < 70? '#f2cf1f': 
+                        rsi >= 70 && rsi < 90? '#14eb6e': '#00ff6b'}}
+                      labels={[{
+                        labelColor: '#ff2900',
+                        activeBarColor: '#ff2900'
+                      }, {
+                        labelColor: '#ff5400',
+                        activeBarColor: '#ff5400'
+                      }, {
+                        labelColor: '#f4ab44',
+                        activeBarColor: '#f4ab44'
+                      }, {
+                        labelColor: '#f2cf1f',
+                        activeBarColor: '#f2cf1f'
+                      }, {
+                        labelColor: '#14eb6e',
+                        activeBarColor: '#14eb6e'
+                      }, {
+                        labelColor: '#00ff6b',
+                        activeBarColor: '#00ff6b'
+                      }]}
+                      
+                      segmentColors={['#ff0000', '#ffa500', '#00ff00']}
+                    />
+                  </View>
+                  <View>
+                    <Text style={{ textAlign: 'center', marginTop: 10, color: COLORS.white }}>Upper Band</Text>
+                    <Text style={{ textAlign: 'center', color: upper < 0? COLORS.green : COLORS.white }}>{upper}</Text>
+                    <Text style={{ textAlign: 'center', marginTop: 5, color: COLORS.white }}>Previous</Text>
+                    <Text style={{ textAlign: 'center', color: prev_upper < 0? COLORS.green : COLORS.white }}>{prev_upper}</Text>
+                  </View>
                 </View>
                 <View style={styles.centerContainer}>
                   <Text style={styles.headerSignal}> {item.signal} </Text>
