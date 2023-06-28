@@ -18,6 +18,8 @@ const AccountOverview = () => {
   const [lower, setLower] = useState(null)
   const [prev_upper, setPrevUpper] = useState(null)
   const [prev_lower, setPrevLower] = useState(null)
+  const [isUpper, setIsUpper] = useState(true)
+  const [isLower, setIsLower] = useState(true)
   const [accounts, setAccs] = useState([]) 
   const [activeAccType, setActiveAccType] = useState('DEMO')
   const [accountType, setAccount] = useState(null)
@@ -41,11 +43,15 @@ const AccountOverview = () => {
       const lower =  querySnapshot.data().diff_lower;
       const prev_upper =  querySnapshot.data().prev_upper;
       const prev_lower =  querySnapshot.data().prev_lower;
+      const trade_upper =  querySnapshot.data().trade_upper;
+      const trade_lower =  querySnapshot.data().trade_lower;
       setRSI(rsi)
       setUpper(upper)
       setLower(lower)
       setPrevUpper(prev_upper)
       setPrevLower(prev_lower)
+      setIsUpper(trade_upper)
+      setIsLower(trade_lower)
    });
   }, []);
 
@@ -130,7 +136,12 @@ const AccountOverview = () => {
                 
                 <View style={styles.header}>
                   <View>
-                    <Text style={{ textAlign: 'center', marginTop: 10, color: COLORS.white }}>Lower Band</Text>
+                    {isLower?(
+                      <Text style={{ textAlign: 'center', marginTop: 10, color: COLORS.green, fontWeight: 'bold' }}>OPEN</Text>
+                    ):(
+                      <Text style={{ textAlign: 'center', marginTop: 10, color: COLORS.red, fontWeight: 'bold' }}>CLOSED</Text>
+                    )}
+                    <Text style={{ textAlign: 'center', color: COLORS.white }}>Lower Band</Text>
                     <Text style={{ textAlign: 'center', color: lower > 0? COLORS.red : COLORS.white }}>{lower}</Text>
                     <Text style={{ textAlign: 'center', marginTop: 5, color: COLORS.white }}>Previous</Text>
                     <Text style={{ textAlign: 'center', color: prev_lower > 0? COLORS.red : COLORS.white }}>{prev_lower}</Text>
@@ -173,7 +184,12 @@ const AccountOverview = () => {
                     />
                   </View>
                   <View>
-                    <Text style={{ textAlign: 'center', marginTop: 10, color: COLORS.white }}>Upper Band</Text>
+                  {isUpper?(
+                      <Text style={{ textAlign: 'center', marginTop: 10, color: COLORS.green, fontWeight: 'bold' }}>OPEN</Text>
+                    ):(
+                      <Text style={{ textAlign: 'center', marginTop: 10, color: COLORS.red, fontWeight: 'bold' }}>CLOSED</Text>
+                    )}
+                    <Text style={{ textAlign: 'center', color: COLORS.white }}>Upper Band</Text>
                     <Text style={{ textAlign: 'center', color: upper < 0? COLORS.green : COLORS.white }}>{upper}</Text>
                     <Text style={{ textAlign: 'center', marginTop: 5, color: COLORS.white }}>Previous</Text>
                     <Text style={{ textAlign: 'center', color: prev_upper < 0? COLORS.green : COLORS.white }}>{prev_upper}</Text>
