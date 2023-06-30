@@ -14,6 +14,7 @@ const AccountOverview = () => {
 
   const { isLoading, } = useFetch()
   const [rsi, setRSI] = useState(null)
+  const [size, setSize] = useState(null)
   const [upper, setUpper] = useState(null)
   const [lower, setLower] = useState(null)
   const [prev_upper, setPrevUpper] = useState(null)
@@ -39,6 +40,7 @@ const AccountOverview = () => {
   useEffect(() => {
     firebase.firestore().collection('Data').doc('technical_analysis').onSnapshot((querySnapshot) => {
       const rsi =  querySnapshot.data().rsi;
+      const size =  querySnapshot.data().candle_size;
       const upper =  querySnapshot.data().diff_upper;
       const lower =  querySnapshot.data().diff_lower;
       const prev_upper =  querySnapshot.data().prev_upper;
@@ -46,6 +48,7 @@ const AccountOverview = () => {
       const trade_upper =  querySnapshot.data().trade_upper;
       const trade_lower =  querySnapshot.data().trade_lower;
       setRSI(rsi)
+      setSize(size)
       setUpper(upper)
       setLower(lower)
       setPrevUpper(prev_upper)
@@ -196,6 +199,8 @@ const AccountOverview = () => {
                   </View>
                 </View>
                 <View style={styles.centerContainer}>
+                  <Text style={{ textAlign: 'center', color: COLORS.white }}>CANDLE SIZE</Text>
+                  <Text style={{ textAlign: 'center', color: size < 0? COLORS.red : size > 0? COLORS.green : COLORS.white, fontWeight: 'bold', fontSize: 20 }}> {size}</Text>
                   <Text style={styles.headerSignal}> {item.signal} </Text>
                   <Text style={{color: 'orange'}}> {item.status} </Text>
                 </View>

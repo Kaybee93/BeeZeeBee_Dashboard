@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     width: 200,
   },
   centerContainer: {
-    marginTop: 15,
+    marginTop: 5,
     justifyContent: 'center',
     alignItems: 'center'
   },
