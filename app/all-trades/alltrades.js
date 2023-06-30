@@ -11,7 +11,7 @@ import { firebase } from '../../config'
 const allTrades = () => {
   const router = useRouter();
   const [trades, setTrades] = useState([]);
-  const [accountType, setAccount] = useState('PRACTICE')
+  const [accountType, setAccount] = useState('REAL')
   
   const { isLoading} = useFetch('search', {
     query: 'DevOps',

@@ -19,7 +19,7 @@ const DailyReport = () => {
     });
 
   const [dailyReport, setDailyReport] = useState([]) 
-  const [accountType, setAccount] = useState('PRACTICE')
+  const [accountType, setAccount] = useState('REAL')
 
   useEffect(() => {
       firebase.firestore().collection('Settings').doc('settings').onSnapshot((querySnapshot) => {

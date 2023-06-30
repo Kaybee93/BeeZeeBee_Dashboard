@@ -18,7 +18,7 @@ const Report = ( {closing, currency, date, loss_count, opening, percentage, prof
 
   useEffect(() => {
     const fetchData = async () => {
-      const querySnapshot = await firebase.firestore().collection('/Accounts/PRACTICE/Trades')
+      const querySnapshot = await firebase.firestore().collection('/Accounts/REAL/Trades')
         .where('date', '==', date)
         .get();
       setCount(querySnapshot.size);
@@ -28,7 +28,7 @@ const Report = ( {closing, currency, date, loss_count, opening, percentage, prof
 
   useEffect(() => {
     const fetchData = async () => {
-      const querySnapshot = await firebase.firestore().collection('/Accounts/PRACTICE/Trades')
+      const querySnapshot = await firebase.firestore().collection('/Accounts/REAL/Trades')
         .where('date', '==', date)
         .where('result', '==', 'win')
         .get();
@@ -39,7 +39,7 @@ const Report = ( {closing, currency, date, loss_count, opening, percentage, prof
 
   useEffect(() => {
     const fetchData = async () => {
-      const querySnapshot = await firebase.firestore().collection('/Accounts/PRACTICE/Trades')
+      const querySnapshot = await firebase.firestore().collection('/Accounts/REAL/Trades')
         .where('date', '==', date)
         .where('result', '==', 'loss')
         .get();
