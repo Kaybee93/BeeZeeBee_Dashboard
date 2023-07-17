@@ -38,7 +38,7 @@ const AccountOverview = () => {
   },[]);
 
   useEffect(() => {
-    firebase.firestore().collection('Data').doc('technical_analysis').onSnapshot((querySnapshot) => {
+    firebase.firestore().collection('Data/technical_analysis/EURUSD').doc('analysis').onSnapshot((querySnapshot) => {
       const rsi =  querySnapshot.data().rsi;
       const size =  querySnapshot.data().candle_size;
       const upper =  querySnapshot.data().diff_upper;
